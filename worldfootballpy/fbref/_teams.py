@@ -24,7 +24,7 @@ from .._utils import (
     squish,
     texts,
 )
-from ._match import _get_match_report_page, _load_or_none, _nth_text
+from ._match import _load_or_none, _nth_text
 from ._players import _GOAL_RENAMES, _goal_log_url, _goal_table
 
 
@@ -396,4 +396,4 @@ def fb_team_match_results(team_url, time_pause=3):
 
 
 __all__ = ["fb_team_goal_logs", "fb_team_match_log_stats", "fb_team_match_stats", "fb_team_player_stats",
-           "fb_squad_wages", "fb_team_match_results", "_get_match_report_page"]
+           "fb_squad_wages", "fb_team_match_results"]

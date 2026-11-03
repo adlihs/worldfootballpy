@@ -7,6 +7,7 @@ de worldfootballR.
 from __future__ import annotations
 
 import io
+import re
 import time
 import warnings
 from functools import lru_cache
@@ -59,9 +60,15 @@ def load_page(url: str, **kwargs):
 
 
 def parse_html(content):
-    if isinstance(content, str):
-        content = content.encode("utf-8")
-    return lxml.html.fromstring(content)
+    """Parsea HTML; los bytes se decodifican como UTF-8 (FBref, Transfermarkt y Understat lo usan)."""
+    if isinstance(content, bytes):
+        try:
+            content = content.decode("utf-8")
+        except UnicodeDecodeError:
+            content = content.decode("latin-1")
+    content = re.sub(r"^\s*<\?xml[^>]*\?>", "", content)
+    parser = lxml.html.HTMLParser(encoding="utf-8")
+    return lxml.html.fromstring(content.encode("utf-8"), parser=parser)
 
 
 def get_json(url: str, **kwargs):

@@ -88,11 +88,10 @@ def make_names(names, unique: bool = True) -> list[str]:
     out = []
     for n in names:
         n = "" if n is None else str(n)
-        n = re.sub(r"[^\w.]", ".", n, flags=re.UNICODE)
-        if n == "":
-            n = "X"
-        elif re.match(r"^(\d|_|\.\d)", n):
+        # R antepone "X" si no empieza por letra o por "." seguido de algo que no sea dígito
+        if n == "" or not (n[0].isalpha() or (n[0] == "." and not (len(n) > 1 and n[1].isdigit()))):
             n = "X" + n
+        n = re.sub(r"[^\w.]", ".", n, flags=re.UNICODE)
         if n in _R_RESERVED:
             n = n + "."
         out.append(n)

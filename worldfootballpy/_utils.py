@@ -69,10 +69,11 @@ def clean_numeric(series: pd.Series) -> pd.Series:
 
 
 def numeric_cols(df: pd.DataFrame, exclude) -> pd.DataFrame:
+    """Convierte a número todas las columnas salvo ``exclude`` (por posición: tolera nombres repetidos)."""
     exclude = set(exclude)
-    for c in df.columns:
+    for i, c in enumerate(list(df.columns)):
         if c not in exclude:
-            df[c] = clean_numeric(df[c])
+            df.isetitem(i, clean_numeric(df.iloc[:, i]))
     return df
 
 

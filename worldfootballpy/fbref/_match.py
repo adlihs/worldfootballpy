@@ -310,7 +310,7 @@ def _half(minute_str, is_pens=False):
 def _parse_events(events_df: pd.DataFrame) -> pd.DataFrame:
     df = events_df.copy()
     es = df["events_string"].astype(str)
-    df["Event_Time"] = es.str.replace(r"&rsquor.*", "", regex=True)
+    df["Event_Time"] = es.str.replace(r"(&rsquor|\u2019).*", "", regex=True).str.strip()
     df["Is_Pens"] = df["Event_Time"].str.contains(r"[A-Z]", regex=True)
     df["Event_Half"] = [_half(t, p) for t, p in zip(df["Event_Time"], df["Is_Pens"])]
 

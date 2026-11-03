@@ -18,7 +18,6 @@ from ._load import (
     player_dictionary_mapping,
 )
 from ._match import (
-    _get_each_season_results,
     fb_advanced_match_stats,
     fb_match_lineups,
     fb_match_report,
